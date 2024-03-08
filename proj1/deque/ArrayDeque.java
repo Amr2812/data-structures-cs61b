@@ -4,17 +4,57 @@ import afu.org.checkerframework.checker.oigj.qual.I;
 import org.checkerframework.checker.units.qual.A;
 import ucb.checkstyle.Main;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private static final int MIN_SIZE = 8;
-    private final int RESIZE_FACTOR = 2;
+    private static final int RESIZE_FACTOR = 2;
     private int front, back;
     private T[] items;
     private int size;
+
+    private class ADIterator implements Iterator<T> {
+        private int pos = 0;
+
+        @Override
+        public boolean hasNext() {
+            return pos < size;
+        }
+
+        @Override
+        public T next() {
+            T item = get(pos);
+            pos++;
+            return item;
+        }
+    }
 
     public ArrayDeque() {
         items = (T[]) new Object[MIN_SIZE];
         front = back = -1;
         size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ADIterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+
+        if (o instanceof ArrayDeque other) {
+            if (this.size() != other.size()) return false;
+
+            for (int i = 0; i < this.size(); i++) {
+                if (!this.get(i).equals(other.get(i))) return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private boolean isFull() {
@@ -131,27 +171,5 @@ public class ArrayDeque<T> implements Deque<T> {
         items = newList;
         front = 0;
         back = size - 1;
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addLast(0);
-        arrayDeque.addLast(1);
-        arrayDeque.addLast(2);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.addFirst(-1);
-        arrayDeque.removeFirst();
-        arrayDeque.removeFirst();
-        arrayDeque.removeFirst();
-        arrayDeque.removeFirst();
-        arrayDeque.removeFirst();
-        arrayDeque.removeFirst();
-//        arrayDeque.removeLast();
-        arrayDeque.printDeque();
     }
 }

@@ -1,6 +1,8 @@
 package deque;
 
-public class LinkedListDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     // The first item (if exists) is at sentinel.next
     private Node sentinel;
     private int size;
@@ -17,11 +19,49 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
 
+    private class LLDIterator implements Iterator<T> {
+        private int pos = 0;
+
+        @Override
+        public boolean hasNext() {
+            return pos < size;
+        }
+
+        @Override
+        public T next() {
+            T item = get(pos);
+            pos++;
+            return item;
+        }
+    }
+
     public LinkedListDeque() {
         sentinel = new Node(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LLDIterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+
+        if (o instanceof LinkedListDeque other) {
+            if (this.size() != other.size()) return false;
+
+            for (int i = 0; i < this.size(); i++) {
+                if (!this.get(i).equals(other.get(i))) return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     @Override

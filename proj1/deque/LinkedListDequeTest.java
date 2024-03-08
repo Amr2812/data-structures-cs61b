@@ -150,4 +150,49 @@ public class LinkedListDequeTest {
         assertEquals(15, (int) lld.removeFirst());
     }
 
+    @Test
+    public void testIterator() {
+        LinkedListDeque<Integer> lld = new LinkedListDeque<>();
+        int pos = 0;
+
+        lld.addLast(5);
+        lld.addLast(10);
+        lld.addLast(15);
+
+        for (int item : lld) {
+            int exp = lld.get(pos);
+            assertEquals(exp, item);
+            pos++;
+        }
+    }
+
+    @Test
+    public void testEqualsTrue() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+
+        lld1.addLast(0);
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld2.addLast(0);
+        lld2.addLast(1);
+        lld2.addLast(2);
+
+        assertTrue(lld1.equals(lld2));
+    }
+
+    @Test
+    public void testEqualsFalse() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+
+        lld1.addLast(0);
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld2.addLast(0);
+        lld2.addLast(1);
+        lld2.addLast(3);
+
+        assertFalse(lld1.equals(lld2));
+    }
 }
