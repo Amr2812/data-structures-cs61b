@@ -134,6 +134,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return p.item;
     }
 
+    @Override
+    public T getFirst() {
+        return get(0);
+    }
+
     public T getRecursive(int index) {
         if (isEmpty() || index < 0) return null;
 

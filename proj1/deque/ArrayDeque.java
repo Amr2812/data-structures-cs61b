@@ -159,6 +159,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return items[index];
     }
 
+    @Override
+    public T getFirst() {
+        if (isEmpty()) return null;
+        return get(front);
+    }
+
     private void resize(int newSize) {
         T[] newList = (T[]) new Object[newSize];
 
