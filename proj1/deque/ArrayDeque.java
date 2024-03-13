@@ -44,10 +44,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public boolean equals(Object o) {
         if (o == this) return true;
 
-        if (o.getClass() != this.getClass()) return false;
-
-//        if (o instanceof ArrayDeque other) {
-            ArrayDeque<T> other = (ArrayDeque<T>) o;
+        if (o instanceof ArrayDeque other) {
             if (this.size() != other.size()) return false;
 
             for (int i = 0; i < this.size(); i++) {
@@ -55,9 +52,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
 
             return true;
-//        }
+        }
 
-//        return false;
+        return false;
     }
 
     private boolean isFull() {
